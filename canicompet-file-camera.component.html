@@ -1,0 +1,7 @@
+
+
+<input [type]="type" (change)="onInputFileChange($event)" [accept]="accept" style="display: none;" #inputFile/>
+<ion-select interface="popover" style="display: none;" (ionChange)="selectOptionCB($event);" #selectOption>
+  <ion-select-option value="file">{{ 'A file' | translate }}</ion-select-option>
+  <ion-select-option value="camera">{{ 'A photo' | translate }}</ion-select-option>
+</ion-select>
