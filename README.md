@@ -15,6 +15,8 @@ I have created it in part of my projects : [https://canicompet.com](https://cani
 
 ### How do I get set up? ###
 
+0.  Install Capacitor-Camera : [https://capacitorjs.com/docs/apis/camera](https://capacitorjs.com/docs/apis/camera "https://capacitorjs.com/docs/apis/camera")
+
 1.  Clone the repository in your project
 2.  Import the component in *.module.ts
 ```
