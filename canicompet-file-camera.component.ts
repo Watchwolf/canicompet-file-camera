@@ -27,7 +27,7 @@ export class CanicompetFileCameraComponent implements OnInit {
 
   @Input() accept = "image/*,application/pdf";
   @Input() type = "file";
-  @Output() change = new EventEmitter<any>();
+  @Output() ionChange = new EventEmitter<any>();
 
   isCameraAvailable = false
   latestInputEvent = null
@@ -50,7 +50,7 @@ export class CanicompetFileCameraComponent implements OnInit {
 
   onInputFileChange(event) {
     this.latestInputEvent = event;
-    this.change.emit(event);
+    this.ionChange.emit(event);
   }
 
   click(event) {
@@ -85,7 +85,7 @@ export class CanicompetFileCameraComponent implements OnInit {
 
       //Simulate <input> event
       const _event = { target: { files: [dataURLtoFile(image.dataUrl, 'file.' + image.format)]}}
-      this.change.emit(_event);
+      this.ionChange.emit(_event);
     }
   }
 
