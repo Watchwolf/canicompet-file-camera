@@ -32,7 +32,7 @@ import { CanicompetFileCameraModule } from '.../component/canicompet-file-camera
 
 3.  Use it in place of <input type="file">
 ```
-<canicompet-file-camera type="file" (change)="onFileChange($event)" accept="image/*" #uploadFile/>
+<canicompet-file-camera type="file" (ionChange)="onFileChange($event)" accept="image/*" #uploadFile/>
 <ion-button slot="end" (click)="uploadFile.click($event)">
    <ion-icon name="camera"></ion-icon>
    {{ 'Take photo' | translate }}
