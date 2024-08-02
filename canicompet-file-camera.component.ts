@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { Platform, NavController, ModalController, IonSelect } from '@ionic/angular';
+import { Platform, NavController, ModalController, IonSelect, AlertController } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
 
 function dataURLtoFile(dataurl, filename) {
@@ -34,7 +34,8 @@ export class CanicompetFileCameraComponent implements OnInit {
 
   constructor(
     private translate: TranslateService, 
-    private platform: Platform) { }
+    private platform: Platform,
+    public alertController: AlertController) { }
 
   async ngOnInit() {
     //On Android we activate the camera
@@ -48,9 +49,20 @@ export class CanicompetFileCameraComponent implements OnInit {
     }
   }
 
-  onInputFileChange(event) {
+  async onInputFileChange(event) {
     this.latestInputEvent = event;
-    this.ionChange.emit(event);
+    console.log(event.target.files[0].size)
+    if(event.target.files[0].size / 1000 / 1000 > 20) {
+      var alert = await this.alertController.create({
+        header: this.translate.instant("Warning"),
+        subHeader: this.translate.instant("File too large"),
+        message: this.translate.instant("The file is larger than 20MB, it is too large to be selected."),
+        buttons: ['OK'],
+      });
+      await alert.present();
+    } else {
+      this.ionChange.emit(event);
+    }
   }
 
   click(event) {
