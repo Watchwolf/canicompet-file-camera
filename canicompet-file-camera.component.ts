@@ -3,6 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Platform, NavController, ModalController, IonSelect, AlertController } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
 
 function dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(','),
@@ -20,6 +23,7 @@ function dataURLtoFile(dataurl, filename) {
   selector: 'canicompet-file-camera',
   templateUrl: './canicompet-file-camera.component.html',
   styleUrls: ['./canicompet-file-camera.component.scss'],
+  standalone: false
 })
 export class CanicompetFileCameraComponent implements OnInit {
   @ViewChild('inputFile') inputFile!: ElementRef;
