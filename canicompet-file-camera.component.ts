@@ -1,12 +1,10 @@
-import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { Platform, NavController, ModalController, IonSelect, AlertController } from '@ionic/angular';
+import { IonSelect, AlertController } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
 
+// Convert a base64 string to a file object
 function dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(','),
         mime = arr[0].match(/:(.*?);/)[1],
@@ -33,12 +31,11 @@ export class CanicompetFileCameraComponent implements OnInit {
   @Input() type = "file";
   @Output() ionChange = new EventEmitter<any>();
 
-  isCameraAvailable = false
+  isAndroidAndCameraAvailable = false
   latestInputEvent = null
 
   constructor(
-    private translate: TranslateService, 
-    private platform: Platform,
+    private translate: TranslateService,
     public alertController: AlertController) { }
 
   async ngOnInit() {
@@ -46,16 +43,16 @@ export class CanicompetFileCameraComponent implements OnInit {
     if(Capacitor.getPlatform() == 'android') {
       const permissions = await Camera.requestPermissions();
       if(permissions.camera === 'denied') {
-        this.isCameraAvailable = false;
+        this.isAndroidAndCameraAvailable = false;
       } else {
-        this.isCameraAvailable = true;
+        this.isAndroidAndCameraAvailable = true;
       }
     }
   }
 
+  //When the input file changes, we emit the event
   async onInputFileChange(event) {
     this.latestInputEvent = event;
-    console.log(event.target.files[0].size)
     if(event.target.files[0].size / 1000 / 1000 > 20) {
       var alert = await this.alertController.create({
         header: this.translate.instant("Warning"),
@@ -70,8 +67,8 @@ export class CanicompetFileCameraComponent implements OnInit {
   }
 
   click(event) {
-    //If android/camera, use the custom drop down menu file/camera
-    if(!this.isCameraAvailable)
+    //If is Android and Camera available, use our own custom drop down menu file/camera
+    if(!this.isAndroidAndCameraAvailable)
       this.inputFile.nativeElement.click();
     else {
       //Else use the system input menu (ios/web)
